@@ -41,6 +41,7 @@ source venv/bin/activate  # En Windows: venv\Scripts\activate
 3. Instala las dependencias:
 ```bash
 pip install -r requirements.txt
+pip install google-generativeai langchain-community
 ```
 
 4. Configura las variables de entorno:
