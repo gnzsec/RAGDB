@@ -5,7 +5,7 @@
 ![LangChain](https://img.shields.io/badge/LangChain-0.3.24-orange.svg)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-1.0.7-purple.svg)
 
-RAGDB es un asistente inteligente que utiliza técnicas de RAG (Retrieval Augmented Generation) para responder preguntas sobre bases de datos. Combina la potencia de los modelos de lenguaje de Google con una base de conocimiento especializada en bases de datos.
+RAGDB es un asistente inteligente que utiliza técnicas de RAG (Retrieval Augmented Generation) para responder preguntas sobre cualquier tema basado en los documentos que le proporciones. Puedes cargar archivos en diferentes formatos (PDF, DOCX, TXT, MD) y el asistente aprenderá de su contenido para responder tus preguntas de manera precisa y contextualizada.
 
 ## 🚀 Características
 
@@ -14,7 +14,9 @@ RAGDB es un asistente inteligente que utiliza técnicas de RAG (Retrieval Augmen
 - Memoria de conversación
 - Búsqueda semántica en documentos
 - Integración con Google Gemini
-- Soporte para múltiples formatos de documentos
+- Soporte para múltiples formatos de documentos (PDF, DOCX, TXT, MD)
+- Carga de documentos para aprendizaje
+- Próximamente: Integración con Google Drive para acceder a documentos directamente
 
 ## 📋 Requisitos Previos
 
@@ -56,15 +58,18 @@ python app.py
 
 2. Abre tu navegador en `http://127.0.0.1:5000`
 
-3. ¡Comienza a hacer preguntas sobre bases de datos!
+3. Carga tus documentos en la carpeta `data/downloaded_files`
+
+4. ¡Comienza a hacer preguntas sobre el contenido de tus documentos!
 
 ## 📚 Documentación
 
 El proyecto incluye documentación sobre:
 - Configuración de la API de Google
 - Estructura del proyecto
-- Formato de los documentos de conocimiento
+- Formato de los documentos soportados
 - Personalización de respuestas
+- Próximas características (Integración con Google Drive)
 
 ## 🤝 Contribuciones
 
