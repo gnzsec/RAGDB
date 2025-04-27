@@ -51,16 +51,21 @@ cp .env.example .env
 
 ## 🎮 Uso
 
-1. Inicia el servidor:
+1. Carga tus documentos en la carpeta `data/downloaded_files`
+
+2. Ejecuta el script indexador para procesar los documentos:
+```bash
+python scripts/indexer.py
+```
+
+3. Inicia el servidor:
 ```bash
 python app.py
 ```
 
-2. Abre tu navegador en `http://127.0.0.1:5000`
+4. Abre tu navegador en `http://127.0.0.1:5000`
 
-3. Carga tus documentos en la carpeta `data/downloaded_files`
-
-4. ¡Comienza a hacer preguntas sobre el contenido de tus documentos!
+5. ¡Comienza a hacer preguntas sobre el contenido de tus documentos!
 
 ## 📚 Documentación
 
