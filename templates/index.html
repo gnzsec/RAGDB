@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de Documentos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        #question-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        #question-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #answer-area {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 50px;
+            white-space: pre-wrap; /* Preserve whitespace and newlines */
+            word-wrap: break-word; /* Break long words */
+        }
+        .loading {
+            font-style: italic;
+            color: #555;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Asistente de Documentos</h1>
+
+    <form id="question-form">
+        <input type="text" id="question-input" placeholder="Escribe tu pregunta aquí..." required>
+        <button type="submit" id="submit-button">Preguntar</button>
+    </form>
+
+    <hr>
+
+    <h2>Historial de Conversación</h2>
+    <div id="chat-history-area">
+        <!-- Chat history will be dynamically added here -->
+    </div>
+
+    <h2>Respuesta:</h2>
+    <div id="answer-area">Esperando pregunta...</div>
+
+    <script>
+        const form = document.getElementById('question-form');
+        const input = document.getElementById('question-input');
+        const answerArea = document.getElementById('answer-area');
+        const submitButton = document.getElementById('submit-button');
+        const chatHistoryArea = document.getElementById('chat-history-area'); // Get history div
+
+        // --- Question Form Logic ---
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default page reload
+            const question = input.value.trim();
+
+            if (!question) return;
+
+            answerArea.textContent = 'Procesando pregunta...';
+            answerArea.className = 'loading'; // Apply loading style
+            submitButton.disabled = true; // Disable button during request
+
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+
+                if (!response.ok) {
+                    // Try to get error details from response body
+                    let errorMsg = `Error del servidor: ${response.status}`;
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.error || errorMsg;
+                    } catch (e) {
+                        // Ignore if response body is not JSON
+                    }
+                    throw new Error(errorMsg);
+                }
+
+                const data = await response.json();
+                answerArea.textContent = data.answer;
+                answerArea.className = ''; // Remove loading style
+
+                // Add question and answer to chat history
+                const chatEntry = document.createElement('div');
+                chatEntry.className = 'chat-entry';
+                chatEntry.innerHTML = `
+                    <strong>Tú:</strong> ${question}<br>
+                    <strong>Asistente:</strong> ${data.answer}
+                `;
+                chatHistoryArea.appendChild(chatEntry);
+            } catch (error) {
+                console.error('Error al preguntar:', error);
+                answerArea.textContent = `Error: ${error.message}`;
+                answerArea.className = 'error'; // Apply error style
+            } finally {
+                 submitButton.disabled = false; // Re-enable button
+                 input.value = ''; // Clear input field
+            }
+        });
+    </script>
+</body>
+</html> 

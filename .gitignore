@@ -1,0 +1,17 @@
+# Entorno virtual
+venv/
+__pycache__/
+
+# Archivos de entorno
+.env
+
+# Archivos de datos
+data/
+credentials/
+
+# Archivos del sistema
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+.Python 
